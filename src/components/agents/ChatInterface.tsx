@@ -736,6 +736,38 @@ export default function ChatInterface() {
                                             </button>
                                         )}
 
+                                    {/* Dang (Community) Button */}
+                                    {activeAgent === 'Dang' && idx === messages.length - 1 && (
+                                        <button
+                                            onClick={async () => {
+                                                const cleanContent = msg.content.split(/🚦|🚥|Compliance Check/i)[0].trim();
+                                                try {
+                                                    await navigator.clipboard.writeText(cleanContent);
+                                                    alert('커뮤니티 홍보 문구가 복사되었습니다!');
+                                                } catch (err) { }
+                                            }}
+                                            className="px-3 py-1.5 bg-orange-500 text-white rounded-lg text-xs font-bold hover:bg-orange-600 transition-colors flex items-center gap-1"
+                                        >
+                                            <span>🚀 당근마켓으로 복사</span>
+                                        </button>
+                                    )}
+
+                                    {/* Supporter (Consultation) Button */}
+                                    {activeAgent === 'Supporter' && idx === messages.length - 1 && (
+                                        <button
+                                            onClick={async () => {
+                                                const cleanContent = msg.content.split(/🚦|🚥|Compliance Check/i)[0].trim();
+                                                try {
+                                                    await navigator.clipboard.writeText(cleanContent);
+                                                    alert('상담용 스크립트가 복사되었습니다!');
+                                                } catch (err) { }
+                                            }}
+                                            className="px-3 py-1.5 bg-blue-500 text-white rounded-lg text-xs font-bold hover:bg-blue-600 transition-colors flex items-center gap-1"
+                                        >
+                                            <span>📋 상담 스크립트 복사</span>
+                                        </button>
+                                    )}
+
                                     {/* Reputation Agent Buttons */}
                                     {(
                                         activeAgent === 'Reputation' ||
