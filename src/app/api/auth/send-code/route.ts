@@ -25,7 +25,7 @@ export async function POST(request: Request) {
         codeStore.set(email, { code, expires });
 
         // Send email
-        const subject = 'Your Seoul Yonsei Admin Verification Code';
+        const subject = 'Your BareunShape Admin Verification Code';
         const text = `Your verification code is: ${code}. It expires in 5 minutes.`;
 
         // Attempt to send email

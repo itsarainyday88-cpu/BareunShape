@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode, useRef } from 'react';
 
-// [🚨 UI Diet] Exactly 5 agents as per SeoulYonsei Frame
+// [🚨 UI Diet] Exactly 5 agents as per Reference Frame
 export type AgentId = 'Marketer' | 'Blog' | 'Insta' | 'Shortform' | 'Threads';
 type ViewMode = 'chat' | 'calendar' | 'archive';
 

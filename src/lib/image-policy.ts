@@ -13,7 +13,7 @@ interface ImageAsset {
 
 /**
  * 프롬프트를 분석하여 AI 생성을 허용할지, 아니면 실물 사진을 반환할지 결정합니다.
- * SeoulYonsei의 고도화된 선택 로직을 치과 환경에 맞춰 이식함.
+ * 고도화된 선택 로직을 치과 환경에 맞춰 이식함.
  */
 export function getImagePolicy(prompt: string, excludedPaths: string[] = [], agentId?: string): {
     shouldGenerate: boolean;

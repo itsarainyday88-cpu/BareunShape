@@ -76,7 +76,7 @@ function Sidebar() {
         }
     };
 
-    // [🚨 UI Diet] Exactly 5 agents as seen in SeoulYonsei Reference
+    // [🚨 UI Diet] Exactly 5 agents as seen in Reference Frame
     const agents = [
         { id: 'Blog', name: 'Blog', role: '바른모양치과 전문 라이터', icon: FileText, color: 'text-green-600', bg: 'bg-green-50', desc: '의료 칼럼 및 블로그 컨텐츠 제작' },
         { id: 'Insta', name: 'Insta', role: '치과 비주얼 디렉터', icon: Instagram, color: 'text-pink-600', bg: 'bg-pink-50', desc: '병원 전경/내원객 모집 카드뉴스 기획' },
