@@ -102,7 +102,7 @@ export default function ArchiveView() {
         }
     };
 
-    const handleUploadToHwack = async (doc: Document, platform: 'NaverBlog' | 'Instagram' | 'Threads') => {
+    const handleUploadToFaireclick = async (doc: Document, platform: 'NaverBlog' | 'Instagram' | 'Threads') => {
         try {
             const stripMarkdown = (text: string) => {
                 return text
@@ -142,7 +142,7 @@ export default function ArchiveView() {
             let postData: any = {};
 
             if (platform === 'NaverBlog') {
-                handoffType = 'HWACK_UPLOAD_NAVER';
+                handoffType = 'FAIRECLICK_UPLOAD_NAVER';
                 let title = "보관함 포스팅";
                 const lines = fullBody.split('\n');
                 for (const line of lines) {
@@ -186,7 +186,7 @@ export default function ArchiveView() {
                 postData = { title, content: fullBody, blocks };
 
             } else if (platform === 'Instagram') {
-                handoffType = 'HWACK_UPLOAD_INSTA';
+                handoffType = 'FAIRECLICK_UPLOAD_INSTA';
                 const imageRegex = /!\[.*?\]\((.*?)\)/g;
                 let rawCaption = fullBody.replace(/!\[.*?\]\(.*?\)/g, '').replace(/Nano Banana Prompt:.*?\n/gi, '');
                 const complianceMatch = rawCaption.match(/\[🚦 Compliance Check\][\s\S]*/);
@@ -221,7 +221,7 @@ export default function ArchiveView() {
                 }
                 postData = { caption: cleanCaption, blocks };
             } else if (platform === 'Threads') {
-                handoffType = 'HWACK_UPLOAD_THREADS';
+                handoffType = 'FAIRECLICK_UPLOAD_THREADS';
                 postData = { content: fullBody };
             }
 
@@ -358,7 +358,7 @@ export default function ArchiveView() {
                                     <div className="flex bg-gray-50 p-1 rounded-lg border border-gray-100 shadow-inner">
                                         {selectedDoc.agent_id === 'Blog' && (
                                             <button
-                                                onClick={() => handleUploadToHwack(selectedDoc, 'NaverBlog')}
+                                                onClick={() => handleUploadToFaireclick(selectedDoc, 'NaverBlog')}
                                                 className="px-3 py-1.5 text-[10px] font-bold bg-[#2DB400] text-white rounded-md hover:bg-[#279c00] transition-all flex items-center gap-1.5 shadow-sm whitespace-nowrap active:scale-95"
                                             >
                                                 <Send className="w-3 h-3" /> 네이버 블로그 업로드
@@ -366,7 +366,7 @@ export default function ArchiveView() {
                                         )}
                                         {selectedDoc.agent_id === 'Insta' && (
                                             <button
-                                                onClick={() => handleUploadToHwack(selectedDoc, 'Instagram')}
+                                                onClick={() => handleUploadToFaireclick(selectedDoc, 'Instagram')}
                                                 className="px-3 py-1.5 text-[10px] font-bold bg-gradient-to-tr from-[#FFDC80] via-[#E1306C] to-[#5851DB] text-white rounded-md opacity-90 hover:opacity-100 transition-all flex items-center gap-1.5 shadow-sm whitespace-nowrap active:scale-95"
                                             >
                                                 <Share2 className="w-3 h-3" /> 인용/인스타 전송
@@ -374,7 +374,7 @@ export default function ArchiveView() {
                                         )}
                                         {selectedDoc.agent_id === 'Threads' && (
                                             <button
-                                                onClick={() => handleUploadToHwack(selectedDoc, 'Threads')}
+                                                onClick={() => handleUploadToFaireclick(selectedDoc, 'Threads')}
                                                 className="px-3 py-1.5 text-[10px] font-bold bg-black text-white rounded-md hover:bg-gray-900 transition-all flex items-center gap-1.5 shadow-sm whitespace-nowrap active:scale-95"
                                             >
                                                 <Send className="w-3 h-3" /> 스레드 전송
