@@ -76,15 +76,13 @@ function Sidebar() {
         }
     };
 
+    // [🚨 UI Diet] Exactly 5 agents as seen in SeoulYonsei Reference
     const agents = [
-        { id: 'Blog', name: 'Blog', role: '바른모양치과 전문 라이터', icon: FileText, color: 'text-green-600', bg: 'bg-green-50', desc: '임플란트/교정 전문 칼럼 및 블로그 컨텐츠 제작' },
-        { id: 'Insta', name: 'Insta', role: '치과 비주얼 디렉터', icon: Instagram, color: 'text-pink-600', bg: 'bg-pink-50', desc: '내원객 모집/병원 전경 중심의 카드뉴스 기획 및 프롬프트 생성' },
-        { id: 'Shortform', name: 'Shortform', role: '컨텐츠/매크로 디렉터', icon: Video, color: 'text-purple-600', bg: 'bg-purple-50', desc: '유튜브 쇼츠/인스타 릴스용 대본 기획 및 전략 생성' },
-        { id: 'Threads', name: 'Threads', role: '인사이트 디렉터', icon: AtSign, color: 'text-slate-900', bg: 'bg-slate-100', desc: '의료적 통찰을 담은 짧고 날카로운 스레드 타래 작성' },
-        { id: 'Dang', name: 'Dang', role: '지역 커뮤니티 매니저', icon: Share2, color: 'text-orange-600', bg: 'bg-orange-50', desc: '지역 환자/내원객 커뮤니티(당근마켓) 홍보 및 소통' },
-        { id: 'Supporter', name: 'Supporter', role: '내원객 상담 실장', icon: MessageSquare, color: 'text-blue-600', bg: 'bg-blue-50', desc: '환자/내원객 진료/상담 문의 응대 스크립트 작성' },
-        { id: 'Reputation', name: 'Reputation', role: '진료 후기 관리자', icon: ShieldAlert, color: 'text-red-600', bg: 'bg-red-50', desc: '치과/진료 리뷰에 대한 맞춤형 답변 생성' },
-        { id: 'Marketer', name: 'Marketer', role: '전략가 + 감시관', icon: TrendingUp, color: 'text-amber-600', bg: 'bg-amber-50', desc: '경쟁 치과 동향 분석 및 의료법/광고법 리스크 감시' },
+        { id: 'Blog', name: 'Blog', role: '바른모양치과 전문 라이터', icon: FileText, color: 'text-green-600', bg: 'bg-green-50', desc: '의료 칼럼 및 블로그 컨텐츠 제작' },
+        { id: 'Insta', name: 'Insta', role: '치과 비주얼 디렉터', icon: Instagram, color: 'text-pink-600', bg: 'bg-pink-50', desc: '병원 전경/내원객 모집 카드뉴스 기획' },
+        { id: 'Threads', name: 'Threads', role: '인사이트 디렉터', icon: Share2, color: 'text-slate-900', bg: 'bg-slate-100', desc: '의료적 통찰을 담은 짧고 강렬한 텍스트 기획' },
+        { id: 'Shortform', name: 'Shortform', role: '숏폼/릴스 디렉터', icon: Video, color: 'text-purple-600', bg: 'bg-purple-50', desc: '릴스, 쇼츠 전용 고밀도 대본 생성' },
+        { id: 'Marketer', name: 'Marketer', role: '전략가 + 감시관', icon: TrendingUp, color: 'text-amber-600', bg: 'bg-amber-50', desc: '경쟁사 동향 분석 및 의료법 리스크 감시' },
     ];
 
     return (
@@ -114,7 +112,7 @@ function Sidebar() {
             </div>
 
             <div className="flex-1 overflow-y-auto p-6">
-                {/* View Mode Toggle (Chat vs Calendar) */}
+                {/* View Mode Toggle */}
                 <div className="flex bg-sand/20 rounded-lg p-1 gap-1 mb-6">
                     <button
                         onClick={() => setCurrentView('chat')}
@@ -173,7 +171,7 @@ function Sidebar() {
                     ))}
                 </div>
 
-                {/* 🛡️ Strategy Status Dashboard Box */}
+                {/* System Status Dashboard */}
                 {currentView === 'chat' && (
                     <div className="mt-10 p-5 rounded-2xl bg-secondary/5 border border-secondary/20 space-y-4">
                         <div className="flex items-center justify-between">
@@ -226,8 +224,6 @@ function Header() {
                 </span>
             </div>
             <div className="flex gap-2">
-
-
             </div>
         </div>
     );
@@ -244,10 +240,9 @@ export default function DashboardLayout({
             <div className="flex h-screen bg-primary overflow-hidden">
                 <Sidebar />
 
-                {/* Main Content (Right Panel - 60%) */}
+                {/* Main Content */}
                 <main className="flex-1 flex flex-col relative bg-primary overflow-hidden">
                     <Header />
-                    {/* Chat Area - Added min-h-0 to allow scrolling within children */}
                     <div className="flex-1 flex flex-col pt-16 min-h-0 overflow-hidden">
                         {children}
                     </div>
