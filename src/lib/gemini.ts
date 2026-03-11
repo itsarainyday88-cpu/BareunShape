@@ -21,7 +21,6 @@ const agentTemperatures: Record<string, number> = {
     Insta: 0.95,
     Blog: 0.9,
     Threads: 0.85,
-    Reputation: 0.8,
     Shortform: 0.7,
     Marketer: 0.7,
 };
