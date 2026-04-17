@@ -1,7 +1,7 @@
 import metadata from '../../public/images/assets-metadata.json';
 
 export type ImageCategory = 'PEOPLE' | 'FACILITY' | 'BRANDING';
-export type ImageTag = 'directors' | 'exterior' | 'entrance' | 'clinic' | 'consulting' | 'logo' | 'map' | 'general';
+export type ImageTag = 'directors' | 'exterior' | 'entrance' | 'studio' | 'consulting' | 'logo' | 'map' | 'general';
 
 interface ImageAsset {
     id: string;
@@ -40,8 +40,8 @@ export function getImagePolicy(prompt: string, excludedPaths: string[] = [], age
         };
     }
 
-    // 1. 의료진 관련 키워드 (PEOPLE) -> 실사 우선 (신뢰/면허 관련 중요성)
-    if (p.includes('원장') || p.includes('의사') || p.includes('전문의') || p.includes('dentist') || p.includes('doctor') || p.includes('director')) {
+    // 1. 교육진 관련 키워드 (PEOPLE) -> 실사 우선 (브랜드 신뢰도)
+    if (p.includes('원장') || p.includes('선생님') || p.includes('배우') || p.includes('actor') || p.includes('teacher') || p.includes('director')) {
         const filtered = metadata.filter(img => 
             img.category === 'PEOPLE' && 
             img.tag === 'directors' &&
@@ -57,17 +57,17 @@ export function getImagePolicy(prompt: string, excludedPaths: string[] = [], age
             return {
                 shouldGenerate: false,
                 selectedImagePath: selected.path,
-                reason: 'Real medical staff asset matched for trust.'
+                reason: 'Real academy staff asset matched for trust.'
             };
         }
     }
 
-    // 2. 병원 시설 관련 키워드 (FACILITY)
+    // 2. 학원 시설 관련 키워드 (FACILITY)
     let facilityTag: string | null = null;
     if (p.includes('외관') || p.includes('건물') || p.includes('exterior')) facilityTag = 'exterior';
     else if (p.includes('로비') || p.includes('대기실') || p.includes('interior') || p.includes('entrance')) facilityTag = 'entrance';
     else if (p.includes('상담') || p.includes('상담실') || p.includes('consulting')) facilityTag = 'consulting';
-    else if (p.includes('진료실') || p.includes('치료실') || p.includes('임플란트') || p.includes('clinic')) facilityTag = 'clinic';
+    else if (p.includes('연습실') || p.includes('수업실') || p.includes('무대') || p.includes('studio')) facilityTag = 'studio';
 
     if (facilityTag) {
         const filtered = metadata.filter(img => 
@@ -120,5 +120,5 @@ export function getFallbackImage(prompt: string, excludedPaths: string[] = [], a
         return unused[Math.floor(Math.random() * unused.length)].path;
     }
 
-    return '/images/interior_1.jpg'; // 대기실 사진으로 폴백
+    return '/images/studio_1.jpg'; // 연습실 사진으로 폴백
 }

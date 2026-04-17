@@ -15,7 +15,7 @@ const notoSerif = Noto_Serif_KR({
 });
 
 export const metadata: Metadata = {
-  title: "바른모양치과 Marketing OS",
+  title: "파인액터스연기학원 Faire Click",
   description: "Premium AI Marketing Dashboard",
 };
 

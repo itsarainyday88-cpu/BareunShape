@@ -40,11 +40,15 @@ export default function LoginPage() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-primary text-secondary relative overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-accent/20 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-accent/10 via-transparent to-transparent" />
 
-            <div className="w-full max-w-md p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-sand/30 relative z-10">
+            <div className="w-full max-w-md p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-secondary/20 relative z-10">
                 <div className="text-center mb-10">
-                    <h1 className="text-3xl font-serif font-bold text-secondary mb-2">바른모양치과 마케팅 OS</h1>
-                    <p className="text-sm text-secondary/70 tracking-wide uppercase">Dental Clinic Solution</p>
+                    <h1 className="text-3xl font-serif font-bold text-charcoal mb-2 leading-tight">
+                        파인액터스<span className="text-secondary">연기학원</span><br />
+                        <span className="text-2xl opacity-90">Faire Click</span>
+                    </h1>
+                    <p className="text-sm text-charcoal/50 tracking-wide uppercase">Acting Academy Solution</p>
                 </div>
 
                 {error && (
@@ -128,8 +132,8 @@ export default function LoginPage() {
                 </div>
             </div>
 
-            <div className="absolute bottom-6 text-center w-full text-xs text-secondary/40">
-                관계자 외 출입 금지
+            <div className="absolute bottom-6 text-center w-full text-xs text-charcoal/30">
+                파인액터스연기학원 관계자 전용
             </div>
         </div>
     );

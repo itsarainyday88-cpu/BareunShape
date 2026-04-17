@@ -4,7 +4,7 @@ export const memoryToolDefinitions = [
             // Memory Tools
             {
                 name: "read_memory",
-                description: "Retrieves strategic information or facts from long-term memory. Use this to recall competitor info, hospital strengths, or past decisions.",
+                description: "Retrieves strategic information or facts from long-term memory. Use this to recall competitor info, academy strengths, or past decisions.",
             },
             {
                 name: "set_memory",
@@ -26,7 +26,7 @@ export const memoryToolDefinitions = [
             },
             {
                 name: "add_fact",
-                description: "Saves a specific fact or detail to memory. Useful for small bits of info like 'Main competitor is Smile Dental' or 'Target audience is 30s women'.",
+                description: "Saves a specific fact or detail to memory. Useful for small bits of info like 'Main competitor is Stage A Academy' or 'Target audience is aspiring actors'.",
                 parameters: {
                     type: "OBJECT",
                     properties: {
@@ -110,14 +110,13 @@ export const searchToolDefinitions = [
     {
         functionDeclarations: [
             {
-                name: "search_local_trends",
-                description: "Searches for recent blog posts from local Korean dental clinics (치과) to identify marketing trends and competitor content. Use this when the user asks about trends, competitor research, or blog topic suggestions WITHOUT providing a URL. Always call this first before scrape_website.",
+                description: "Searches for recent blog posts from local Korean acting academies (연기학원) to identify marketing trends and competitor content. Use this when the user asks about trends, competitor research, or blog topic suggestions WITHOUT providing a URL. Always call this first before scrape_website.",
                 parameters: {
                     type: "OBJECT",
                     properties: {
                         query: {
                             type: "STRING",
-                            description: "The Korean search query to find competitor blogs (e.g., '김포 운양동 수학치과 블로그 최신글', '김포 영어치과 겨울특강')."
+                            description: "The Korean search query to find competitor blogs (e.g., '강남 연기학원 오디션 합격 후기', '홍대 연기학원 겨울 방학 특강')."
                         },
                         max_results: {
                             type: "INTEGER",
@@ -139,7 +138,7 @@ export const searchToolDefinitions = [
                     properties: {
                         url: {
                             type: "STRING",
-                            description: "The exact URL of the webpage or blog post to read (e.g., 'https://blog.naver.com/bareunshape_dental/post_id')."
+                            description: "The exact URL of the webpage or blog post to read (e.g., 'https://blog.naver.com/fineactors/post_id')."
                         }
                     },
                     required: ["url"]

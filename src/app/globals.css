@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  /* 1. Palette Definitions (BareunShape Dental) */
+  /* 1. Palette Definitions (Fine Actors — Stage Green) */
   --color-white: #FFFFFF;
-  --color-champagne-gold: #9E7A4E;
-  /* Deeper Champagne Gold for readable text & headers */
-  --color-light-gold: #D4B895;
-  /* Lighter Champagne Gold for backgrounds/accents */
-  --color-charcoal: #2D2D2D;
-  /* For regular legible body text */
-  --color-warm-white: #FCFBFA;
-  /* Warm Background */
+  --color-stage-green: #22C55E;
+  /* Vivid stage green — buttons, active borders, badges */
+  --color-light-green: #DCFCE7;
+  /* Soft green wash — icon backgrounds, hover tints */
+  --color-charcoal: #1E1E2E;
+  /* Slightly deeper charcoal for brand name text */
+  --color-cool-white: #F8FAFC;
+  /* Clean cool-white background */
 
   /* 2. Semantic Mapping */
   --color-primary: var(--color-white);
-  --color-secondary: var(--color-champagne-gold);
-  /* Brand identity color: Headers, Buttons */
-  --color-accent: var(--color-light-gold);
-  /* Subtle highlights */
-  --color-sand: var(--color-warm-white);
+  --color-secondary: var(--color-stage-green);
+  /* Brand identity: active borders, buttons, badges, ping dots */
+  --color-accent: var(--color-light-green);
+  /* Subtle highlights: icon bg, hover tint */
+  --color-sand: var(--color-cool-white);
   /* Background */
 
   --font-serif: var(--font-noto-serif), serif;
@@ -49,4 +49,14 @@ h6 {
 /* Custom Utilities */
 @utility container-custom {
   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Agent Rotary Picker Animations */
+@keyframes rotary-in-up {
+  from { transform: translateY(60px) scale(0.9); opacity: 0; filter: blur(2px); }
+  to   { transform: translateY(0) scale(1); opacity: 1; filter: blur(0); }
+}
+@keyframes rotary-in-down {
+  from { transform: translateY(-60px) scale(0.9); opacity: 0; filter: blur(2px); }
+  to   { transform: translateY(0) scale(1); opacity: 1; filter: blur(0); }
 }

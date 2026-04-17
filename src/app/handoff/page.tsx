@@ -82,7 +82,7 @@ export default function HandoffPage() {
                 <HandoffContent />
             </Suspense>
             <div className="mt-8 text-xs text-gray-400">
-                바른모양치과 마케팅 OS • Secure Handoff Bridge
+                파인액터스 Faire Click • Secure Handoff Bridge
             </div>
         </div>
     );

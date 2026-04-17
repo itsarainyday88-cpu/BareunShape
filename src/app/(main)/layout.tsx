@@ -2,30 +2,26 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import {
-    Users,
     MessageSquare,
     Settings,
     LogOut,
-    LayoutDashboard,
-    Sparkles,
     Calendar,
     Library,
-    FileText,
-    Share2,
-    Instagram,
+    Code,
+    CheckCircle,
+    Users,
+    LayoutDashboard,
+    Sparkles,
     ShieldAlert,
     Search,
-    Code,
-    TrendingUp,
     Menu,
-    Video,
-    CheckCircle,
     ExternalLink,
     Play,
     AtSign
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { AgentProvider, useAgent } from '@/context/AgentContext';
+import AgentRotaryPicker from '@/components/agents/AgentRotaryPicker';
 
 // Sidebar separate component to consume context
 function Sidebar() {
@@ -76,14 +72,6 @@ function Sidebar() {
         }
     };
 
-    // [🚨 UI Diet] Exactly 5 agents as seen in Reference Frame
-    const agents = [
-        { id: 'Blog', name: 'Blog', role: '바른모양치과 전문 라이터', icon: FileText, color: 'text-green-600', bg: 'bg-green-50', desc: '의료 칼럼 및 블로그 컨텐츠 제작' },
-        { id: 'Insta', name: 'Insta', role: '치과 비주얼 디렉터', icon: Instagram, color: 'text-pink-600', bg: 'bg-pink-50', desc: '병원 전경/내원객 모집 카드뉴스 기획' },
-        { id: 'Threads', name: 'Threads', role: '인사이트 디렉터', icon: Share2, color: 'text-slate-900', bg: 'bg-slate-100', desc: '의료적 통찰을 담은 짧고 강렬한 텍스트 기획' },
-        { id: 'Shortform', name: 'Shortform', role: '숏폼/릴스 디렉터', icon: Video, color: 'text-purple-600', bg: 'bg-purple-50', desc: '릴스, 쇼츠 전용 고밀도 대본 생성' },
-        { id: 'Marketer', name: 'Marketer', role: '전략가 + 감시관', icon: TrendingUp, color: 'text-amber-600', bg: 'bg-amber-50', desc: '경쟁사 동향 분석 및 의료법 리스크 감시' },
-    ];
 
     return (
         <aside
@@ -105,9 +93,9 @@ function Sidebar() {
                     title="새로고침 (초기화)"
                 >
                     <div className="flex flex-col gap-0.5">
-                        <h1 className="text-lg font-black tracking-tight text-secondary">바른모양치과 <span className="text-primary font-black">마케팅 OS</span></h1>
+                        <h1 className="text-lg font-black tracking-tight text-charcoal">파인액터스 <span className="text-secondary font-black">Faire Click</span></h1>
                     </div>
-                    <p className="text-xs text-secondary/60 tracking-wider">Dental Clinic Solution</p>
+                    <p className="text-xs text-charcoal/50 tracking-wider">Acting Academy Solution</p>
                 </button>
             </div>
 
@@ -137,43 +125,12 @@ function Sidebar() {
                     </button>
                 </div>
 
-                <div className={`flex flex-col gap-3 transition-opacity ${currentView !== 'chat' ? 'opacity-40 pointer-events-none' : ''}`}>
-                    {agents.map((agent) => (
-                        <button
-                            key={agent.id}
-                            onClick={() => setActiveAgent(agent.id as any)}
-                            className={`flex items-center gap-5 p-5 rounded-2xl border transition-all text-left group relative
-                                ${activeAgent === agent.id
-                                    ? 'bg-secondary text-primary border-secondary shadow-xl scale-[1.02] ring-4 ring-secondary/10'
-                                    : 'bg-white border-sand/40 hover:border-secondary/50 hover:bg-sand/5 text-foreground shadow-sm'
-                                }
-                            `}
-                        >
-                            <div className={`p-3 rounded-xl shrink-0 transition-colors shadow-inner
-                                ${activeAgent === agent.id ? 'bg-white/20' : `${agent.bg} ${agent.color}`} `}>
-                                <agent.icon className="w-6 h-6" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <div className="flex items-center justify-between gap-2">
-                                    <h3 className="font-black text-[17px] tracking-tight leading-tight">{agent.name}</h3>
-                                    {activeAgent === agent.id && (
-                                        <div className="flex gap-1">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
-                                            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                                        </div>
-                                    )}
-                                </div>
-                                <p className={`text-[12px] font-medium mt-1.5 truncate ${activeAgent === agent.id ? 'text-primary/90' : 'text-foreground/40'}`}>
-                                    {agent.role}
-                                </p>
-                            </div>
-                        </button>
-                    ))}
-                </div>
+                {/* Agent Rotary Picker */}
+                <AgentRotaryPicker />
 
                 {/* System Status Dashboard */}
                 {currentView === 'chat' && (
-                    <div className="mt-10 p-5 rounded-2xl bg-secondary/5 border border-secondary/20 space-y-4">
+                    <div className="mt-12 p-5 rounded-2xl bg-secondary/5 border border-secondary/20 space-y-4">
                         <div className="flex items-center justify-between">
                             <h4 className="text-[11px] font-black text-secondary/60 uppercase tracking-widest flex items-center gap-2">
                                 <Code className="w-3 h-3" /> System Status
@@ -198,6 +155,24 @@ function Sidebar() {
                             </div>
                         </div>
                     </div>
+                )}
+
+                {/* Chrome Extension Install Button */}
+                {currentView === 'chat' && (
+                    <a
+                        href="https://chromewebstore.google.com/detail/faire-click-marketing-aut/kfldgophlmpejmlgjapbbnemnkdffobo?authuser=0&hl=ko"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 flex items-center gap-4 p-4 rounded-2xl bg-white border border-sand/50 shadow-sm hover:shadow-md hover:border-secondary/30 transition-all group"
+                    >
+                        <div className="p-2.5 rounded-xl bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <ExternalLink className="w-5 h-5" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <h5 className="text-[12px] font-black text-secondary tracking-tight">Faire Click 설치</h5>
+                            <p className="text-[10px] text-foreground/40 font-medium truncate">마케팅 자동화 확장프로그램</p>
+                        </div>
+                    </a>
                 )}
             </div>
 

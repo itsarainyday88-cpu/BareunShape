@@ -1,5 +1,5 @@
 {
-  "name": "bareunshape-admin",
+  "name": "fineactors-admin",
   "version": "0.1.0",
   "private": true,
   "main": "dist-electron/main.js",
@@ -14,8 +14,8 @@
     "electron:pack": "npm run electron:build -- --dir"
   },
   "build": {
-    "appId": "com.bareunshape.admin",
-    "productName": "바른모양치과",
+    "appId": "com.fineactors.admin",
+    "productName": "파인액터스",
     "forceCodeSigning": false,
     "directories": {
       "output": "release"

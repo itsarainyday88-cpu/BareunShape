@@ -217,9 +217,9 @@ export default function ChatInterface() {
         if (messages.length === 0) return;
         setLoading(true);
         const date = new Date().toISOString().split('T')[0];
-        const fileName = `BareunShape_${activeAgent}_${date}.md`;
+        const fileName = `FineActors_${activeAgent}_${date}.md`;
 
-        let content = `# BareunShape Marketing OS Chat Log\nDate: ${date}\nAgent: ${activeAgent}\n\n---\n\n`;
+        let content = `# FineActors Marketing OS Chat Log\nDate: ${date}\nAgent: ${activeAgent}\n\n---\n\n`;
 
         for (const msg of messages) {
             const role = msg.role === 'user' ? 'User' : activeAgent;
@@ -440,9 +440,9 @@ export default function ChatInterface() {
                     </div>
                 </div>
                 <div className="mt-2 text-center text-[10px] text-gray-400 flex justify-center items-center gap-4">
-                    <span className="flex items-center gap-1"><ShieldAlert className="w-3 h-3" /> 의료법/표시광고법 검토 시스템 활성화됨</span>
+                    <span className="flex items-center gap-1"><ShieldAlert className="w-3 h-3" /> 학원법/표시광고법 검토 시스템 활성화됨</span>
                     <span>•</span>
-                    <span className="flex items-center gap-1"><Bot className="w-3 h-3" /> {activeAgent.toUpperCase()} 연결됨</span>
+                    <span className="flex items-center gap-1"><Bot className="w-3 h-3" /> 파인액터스연기학원 Faire Click • {activeAgent.toUpperCase()} 연결됨</span>
                 </div>
             </div>
         </div>
