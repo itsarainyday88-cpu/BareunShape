@@ -231,7 +231,7 @@ export async function* generateAgentResponseStream(agentId: string, message: str
                                 } else if (inThreadsCompliance) {
                                     yield processedLine;
                                 } else if (!skipThreadsPost && processedLine.trim().length > 0) {
-                                    threadsLineCount++; if (threadsLineCount <= 2) yield processedLine;
+                                    threadsLineCount++; yield processedLine;
                                 } else if (!skipThreadsPost) yield processedLine;
                             } else if (agentId === 'Insta') {
                                 if (!isFirstTextPassed && processedLine.trim().length > 0) {
@@ -339,7 +339,7 @@ function isSimilarToHook(hook: string, line: string): boolean {
 function verifyFactIntegrity(text: string, knownFacts: string): string {
     const factPattern = /([1-9]\d*)\s*(명|%|점|학년도|등급|위|%p|원|건|개|배|학기|대|곳|가지)/g;
     return text.replace(factPattern, (match, value) => {
-        if (parseInt(value) <= 10 || knownFacts.includes(value)) return match;
+        if (parseInt(value) <= 999 || knownFacts.includes(value)) return match;
         return `[🚨 확인 필요: ${match}]`;
     });
 }
