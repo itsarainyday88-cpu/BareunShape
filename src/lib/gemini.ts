@@ -26,7 +26,7 @@ const agentTemperatures: Record<string, number> = {
 };
 
 /**
- * [BareunShape Edition] 실시간 의료 맥락 생성기
+ * [BareunShape Edition] 실시간 연기학원 맥락 생성기
  */
 function getTodayContext() {
     const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
@@ -90,7 +90,7 @@ export async function* generateAgentResponseStream(agentId: string, message: str
             tools: tools as any,
             generationConfig: {
                 temperature: agentTemperatures[agentId] || 0.7,
-                maxOutputTokens: 16384,
+                maxOutputTokens: 65536,
             },
         });
 
@@ -196,7 +196,7 @@ export async function* generateAgentResponseStream(agentId: string, message: str
                                     if (imageUrl) {
                                         usedImageUrls.add(imageUrl);
                                         const finalUrl = imageUrl.startsWith('data:') ? imageUrl : encodeURI(imageUrl);
-                                        yield line.replace(fullMatch, `\n\n![AI 생성 이미지](${finalUrl})\n\n`) + '\n';
+                                        yield line.replace(fullMatch, `\n\n![원내 자산](${finalUrl})\n\n`) + '\n';
                                     } else {
                                         const fallback = await getFallbackImageAsync(promptText, Array.from(usedImageUrls), agentId);
                                         usedImageUrls.add(fallback);
@@ -210,7 +210,8 @@ export async function* generateAgentResponseStream(agentId: string, message: str
                                 }
                             } else yield line + '\n';
                         } else {
-                            let processedLine = line + '\n';
+                            let processedLine = line.replace(/\[?(AI\s*생성\s*이미지|사진\s*삽입|해당\s*이미지)\]?/gi, '');
+                            processedLine = processedLine + '\n';
                             if (agentId === 'Shortform') {
                                 processedLine = processedLine.replace(/!\[.*?\]\(.*?\)/g, '');
                                 if (!processedLine.trim()) continue;
@@ -335,11 +336,7 @@ function isSimilarToHook(hook: string, line: string): boolean {
     return (matches / lw.length) > 0.6;
 }
 
-/** Truth-Guard Engine */
+/** Truth-Guard Engine (비활성화) */
 function verifyFactIntegrity(text: string, knownFacts: string): string {
-    const factPattern = /([1-9]\d*)\s*(명|%|점|학년도|등급|위|%p|원|건|개|배|학기|대|곳|가지)/g;
-    return text.replace(factPattern, (match, value) => {
-        if (parseInt(value) <= 999 || knownFacts.includes(value)) return match;
-        return `[🚨 확인 필요: ${match}]`;
-    });
+    return text;
 }

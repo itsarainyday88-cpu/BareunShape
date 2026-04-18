@@ -21,7 +21,7 @@ export async function retrieveStyleContext(query: string, matchCount = 3): Promi
         // 2. Supabase에서 RAG 전용 테이블(archive_posts) 기반 유사 문체 데이터 검색
         const { data: documents, error } = await supabase.rpc('match_archive_posts', {
             query_embedding: queryEmbedding,
-            match_threshold: 0.4,
+            match_threshold: 0.3,
             match_count: matchCount,
         });
 

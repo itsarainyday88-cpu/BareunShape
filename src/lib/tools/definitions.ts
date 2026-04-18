@@ -110,6 +110,7 @@ export const searchToolDefinitions = [
     {
         functionDeclarations: [
             {
+                name: "search_local_trends",
                 description: "Searches for recent blog posts from local Korean acting academies (연기학원) to identify marketing trends and competitor content. Use this when the user asks about trends, competitor research, or blog topic suggestions WITHOUT providing a URL. Always call this first before scrape_website.",
                 parameters: {
                     type: "OBJECT",

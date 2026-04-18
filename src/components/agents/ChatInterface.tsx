@@ -213,65 +213,6 @@ export default function ChatInterface() {
         }
     };
 
-    const handleSave = async () => {
-        if (messages.length === 0) return;
-        setLoading(true);
-        const date = new Date().toISOString().split('T')[0];
-        const fileName = `FineActors_${activeAgent}_${date}.md`;
-
-        let content = `# FineActors Marketing OS Chat Log\nDate: ${date}\nAgent: ${activeAgent}\n\n---\n\n`;
-
-        for (const msg of messages) {
-            const role = msg.role === 'user' ? 'User' : activeAgent;
-            let processedContent = msg.content;
-            const imageRegex = /!\[(.*?)\]\((\/generated-images\/.*?)\)/g;
-            let match;
-            const replacements = [];
-
-            while ((match = imageRegex.exec(msg.content)) !== null) {
-                const fullMatch = match[0];
-                const altText = match[1];
-                const relativeUrl = match[2];
-
-                try {
-                    const response = await fetch(relativeUrl);
-                    if (response.ok) {
-                        const blob = await response.blob();
-                        const base64 = await new Promise<string>((resolve) => {
-                            const reader = new FileReader();
-                            reader.onloadend = () => resolve(reader.result as string);
-                            reader.readAsDataURL(blob);
-                        });
-                        replacements.push({ fullMatch, newStr: `![${altText}](${base64})` });
-                    }
-                } catch (err) { }
-            }
-
-            for (const rep of replacements) {
-                processedContent = processedContent.replace(rep.fullMatch, rep.newStr);
-            }
-            content += `## [${role}]\n${processedContent}\n\n---\n\n`;
-        }
-
-        try {
-            // @ts-ignore
-            if (window.showSaveFilePicker) {
-                // @ts-ignore
-                const handle = await window.showSaveFilePicker({ suggestedName: fileName, types: [{ description: 'Markdown File', accept: { 'text/markdown': ['.md'] } }] });
-                const writable = await handle.createWritable();
-                await writable.write(content);
-                await writable.close();
-            } else {
-                const blob = new Blob([content], { type: 'text/markdown' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = fileName;
-                a.click();
-                URL.revokeObjectURL(url);
-            }
-        } catch (err) { } finally { setLoading(false); }
-    };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -432,7 +373,6 @@ export default function ChatInterface() {
                 <div className="relative flex items-end gap-2 bg-white border border-sand/40 rounded-2xl p-2 shadow-sm focus-within:ring-2 focus-within:ring-secondary/20 focus-within:border-secondary transition-all">
                     <textarea value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} placeholder={`${activeAgent}에게 명령 입력...`} className="flex-1 max-h-32 min-h-[60px] py-4 bg-transparent border-none outline-none text-sm text-foreground placeholder:text-gray-400 resize-none ml-2" />
                     <div className="flex flex-col gap-2 pb-1 pr-1">
-                        <button onClick={handleSave} disabled={loading || messages.length === 0} className="flex items-center justify-center gap-2 px-3 py-2 text-gray-500 hover:text-primary hover:bg-secondary/30 rounded-xl transition-all font-bold text-[10px] border border-transparent hover:border-secondary/20" title="대화 내용 저장 (.md)"><Save className="w-3.5 h-3.5" /><span>대화 저장</span></button>
                         {loading ? (<button onClick={handleStop} className="flex items-center justify-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-all shadow-md active:scale-95 group"><span className="text-xs font-black tracking-tight">중단하기</span><Square className="w-4 h-4 fill-current" /></button>) : (<button onClick={handleSend} disabled={!input.trim()} className="flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-secondary rounded-xl hover:bg-primary/95 transition-all shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed group"><span className="text-xs font-black tracking-tight">전송하기</span><Send className="w-4 h-4 translate-x-0.5 group-hover:translate-x-1 transition-transform" /></button>)}
                     </div>
                 </div>

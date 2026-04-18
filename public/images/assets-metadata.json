@@ -1,47 +1,5 @@
 [
   {
-    "id": "people_directors_01",
-    "category": "PEOPLE",
-    "tag": "directors",
-    "path": "/images/directors.png",
-    "original_name": "directors.png"
-  },
-  {
-    "id": "people_directors_02",
-    "category": "PEOPLE",
-    "tag": "directors",
-    "path": "/images/directors_v1.png",
-    "original_name": "directors_v1.png"
-  },
-  {
-    "id": "facility_exterior_01",
-    "category": "FACILITY",
-    "tag": "exterior",
-    "path": "/images/exterior.jpg",
-    "original_name": "exterior.jpg"
-  },
-  {
-    "id": "facility_lobby_01",
-    "category": "FACILITY",
-    "tag": "entrance",
-    "path": "/images/interior_1.jpg",
-    "original_name": "interior_1.jpg"
-  },
-  {
-    "id": "facility_clinic_01",
-    "category": "FACILITY",
-    "tag": "clinic",
-    "path": "/images/interior_2.jpg",
-    "original_name": "interior_2.jpg"
-  },
-  {
-    "id": "facility_consulting_01",
-    "category": "FACILITY",
-    "tag": "consulting",
-    "path": "/images/consulting_room.jpg",
-    "original_name": "consulting_room.jpg"
-  },
-  {
     "id": "branding_logo_01",
     "category": "BRANDING",
     "tag": "logo",
@@ -49,10 +7,10 @@
     "original_name": "logo.png"
   },
   {
-    "id": "branding_map_01",
-    "category": "BRANDING",
-    "tag": "map",
-    "path": "/images/map.png",
-    "original_name": "map.png"
+    "id": "facility_studio_01",
+    "category": "FACILITY",
+    "tag": "studio",
+    "path": "https://placehold.co/800x500/1a1a1a/ffffff?text=Acting+Studio+Placeholder",
+    "original_name": "studio_placeholder.png"
   }
 ]

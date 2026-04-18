@@ -13,7 +13,7 @@ interface ImageAsset {
 
 /**
  * 프롬프트를 분석하여 AI 생성을 허용할지, 아니면 실물 사진을 반환할지 결정합니다.
- * 고도화된 선택 로직을 치과 환경에 맞춰 이식함.
+ * 고도화된 선택 로직을 연기학원 환경에 맞춰 적용함.
  */
 export function getImagePolicy(prompt: string, excludedPaths: string[] = [], agentId?: string): {
     shouldGenerate: boolean;
@@ -50,7 +50,7 @@ export function getImagePolicy(prompt: string, excludedPaths: string[] = [], age
         const selected = filtered.length > 0 ? filtered[Math.floor(Math.random() * filtered.length)] : null;
         
         if (selected) {
-            // 인스타라면 20% 확률로 다양성을 위해 AI 인물(환자 등) 배경으로 대체 가능
+            // 인스타라면 20% 확률로 다양성을 위해 AI 생성 이미지로 대체 가능
             if (isInsta && Math.random() < 0.2) {
                 return { shouldGenerate: true, reason: '[Insta Mix] 20% luck: Trying AI version for variety.' };
             }
@@ -120,5 +120,5 @@ export function getFallbackImage(prompt: string, excludedPaths: string[] = [], a
         return unused[Math.floor(Math.random() * unused.length)].path;
     }
 
-    return '/images/studio_1.jpg'; // 연습실 사진으로 폴백
+    return 'https://placehold.co/800x500/1a1a1a/ffffff?text=Acting+Studio'; // 최후의 임시 연습실 사진 폴백
 }
