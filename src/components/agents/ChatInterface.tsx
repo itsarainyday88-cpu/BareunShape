@@ -292,7 +292,7 @@ export default function ChatInterface() {
                         <div className="space-y-2 max-w-[80%]">
                             <div className={`p-4 rounded-2xl shadow-sm text-sm prose prose-sm max-w-none 
                                 ${activeAgent === 'Shortform'
-                                    ? 'prose-p:my-4 prose-p:leading-8 prose-headings:mb-3 prose-headings:mt-6 prose-ul:my-4 prose-li:my-4 prose-li:leading-8'
+                                    ? 'prose-p:my-2 prose-p:leading-relaxed prose-headings:mb-2 prose-headings:mt-4 prose-ul:my-2 prose-li:my-2 prose-li:leading-relaxed'
                                     : 'leading-relaxed prose-p:my-2'}
                                 ${msg.role === 'model'
                                     ? 'bg-white rounded-tl-none border border-sand/30 text-foreground'
@@ -301,16 +301,16 @@ export default function ChatInterface() {
                                     let formattedContent = msg.content;
                                     if (msg.role === 'model' && activeAgent === 'Shortform') {
                                         formattedContent = formattedContent
-                                            .replace(/([^\n])\n([^\n])/g, '$1\n\n$2')
-                                            .replace(/\n\s*(\d+\.|🚦|\*\*🚦|\(오프닝\)|\(본문\)|\(클로징\))/g, '\n\n\n$1');
+                                            .replace(/([^\n])\n([^\n])/g, '$1\n$2')
+                                            .replace(/\n\s*(\d+\.|🚦|\*\*🚦|\(오프닝\)|\(본문\)|\(클로징\))/g, '\n\n$1');
                                     }
                                     return (
                                         <ReactMarkdown
                                             rehypePlugins={[rehypeRaw, [rehypeSanitize, { protocols: { href: ['http', 'https', 'mailto', 'tel'], src: ['http', 'https', 'data'] } }]]}
                                             components={activeAgent === 'Shortform' ? {
-                                                p: ({ node, ...props }) => <p className="mb-10 leading-[2.2] text-[15.5px] font-medium" {...props} />,
-                                                li: ({ node, ...props }) => <li className="mb-6 leading-[2] list-none" {...props} />,
-                                                h3: ({ node, ...props }) => <h3 className="text-xl font-black mt-14 mb-6 border-b-2 border-secondary/20 pb-2 text-secondary flex items-center gap-2" {...props} />,
+                                                p: ({ node, ...props }) => <p className="mb-4 leading-relaxed text-[15px]" {...props} />,
+                                                li: ({ node, ...props }) => <li className="mb-2 leading-relaxed list-none" {...props} />,
+                                                h3: ({ node, ...props }) => <h3 className="text-xl font-black mt-8 mb-4 border-b-2 border-secondary/20 pb-2 text-secondary flex items-center gap-2" {...props} />,
                                                 strong: ({ node, ...props }) => <strong className="text-secondary font-black bg-secondary/5 px-1 rounded" {...props} />,
                                             } : {}}
                                         >
