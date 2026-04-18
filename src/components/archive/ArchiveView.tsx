@@ -233,11 +233,7 @@ export default function ArchiveView() {
             const { id } = await res.json();
 
             if (id) {
-                if ((window as any).electronAPI) {
-                    (window as any).electronAPI.send('open-external', `${window.location.origin}/handoff?id=${id}`);
-                } else {
-                    window.open(`/handoff?id=${id}`, '_blank', 'noreferrer,noopener');
-                }
+                window.open(`/handoff?id=${id}`, '_blank', 'noreferrer,noopener');
             }
         } catch (error) {
             console.error('Handoff error:', error);

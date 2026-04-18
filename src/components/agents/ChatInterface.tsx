@@ -361,8 +361,7 @@ export default function ChatInterface() {
                                             try {
                                                 const res = await fetch('/api/handoff', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'FAIRECLICK_UPLOAD_NAVER', data: postData }) });
                                                 const { id } = await res.json();
-                                                if ((window as any).electronAPI) (window as any).electronAPI.send('open-external', `${window.location.origin}/handoff?id=${id}`);
-                                                else window.open(`/handoff?id=${id}`, '_blank', 'noreferrer,noopener');
+                                                window.open(`/handoff?id=${id}`, '_blank', 'noreferrer,noopener');
                                             } catch (e) { alert('전송 중 오류가 발생했습니다.'); }
                                         }} className="px-3 py-1.5 bg-[#03C75A] text-white rounded-lg text-xs font-bold hover:bg-[#02b351] transition-colors flex items-center gap-1"><span>🚀 네이버 업로드</span></button>
                                     )}
@@ -394,8 +393,7 @@ export default function ChatInterface() {
                                             try {
                                                 const res = await fetch('/api/handoff', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'FAIRECLICK_UPLOAD_INSTA', data: { caption: cleanCaption, blocks: blocks } }) });
                                                 const { id } = await res.json();
-                                                if ((window as any).electronAPI) (window as any).electronAPI.send('open-external', `${window.location.origin}/handoff?id=${id}`);
-                                                else window.open(`/handoff?id=${id}`, '_blank', 'noreferrer,noopener');
+                                                window.open(`/handoff?id=${id}`, '_blank', 'noreferrer,noopener');
                                             } catch (e) { }
                                         }} className="px-3 py-1.5 bg-gradient-to-tr from-[#FFDC80] via-[#F56040] to-[#833AB4] text-white rounded-lg text-xs font-bold hover:opacity-90 transition-opacity flex items-center gap-1"><span>🚀 인스타 업로드</span></button>
                                     )}
@@ -411,8 +409,7 @@ export default function ChatInterface() {
                                             try {
                                                 const res = await fetch('/api/handoff', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'FAIRECLICK_UPLOAD_THREADS', data: { content: c } }) });
                                                 const { id } = await res.json();
-                                                if ((window as any).electronAPI) (window as any).electronAPI.send('open-external', `${window.location.origin}/handoff?id=${id}`);
-                                                else window.open(`/handoff?id=${id}`, '_blank', 'noreferrer,noopener');
+                                                window.open(`/handoff?id=${id}`, '_blank', 'noreferrer,noopener');
                                             } catch (e) { }
                                         }} className="px-3 py-1.5 bg-black text-white rounded-lg text-xs font-bold hover:bg-gray-900 transition-colors flex items-center gap-1"><span>🚀 스레드 업로드</span></button>
                                     )}
