@@ -60,7 +60,7 @@ function HandoffContent() {
             <p className="text-gray-500 text-sm mb-6 break-keep">
                 {message}
                 {status === 'success' && <br />}
-                {status === 'success' && <span className="text-xs text-blue-600 font-medium">이제 크롬 확장 프로그램(Faireclick)이 자동으로 동작할 것입니다.</span>}
+                {status === 'success' && <span className="text-xs text-blue-600 font-medium">이제 크롬 확장 프로그램(Hwack)이 자동으로 동작할 것입니다.</span>}
             </p>
 
             {status === 'success' && (
@@ -82,7 +82,7 @@ export default function HandoffPage() {
                 <HandoffContent />
             </Suspense>
             <div className="mt-8 text-xs text-gray-400">
-                파인액터스 Faire Click • Secure Handoff Bridge
+                바른모양치과 마케팅 OS • Secure Handoff Bridge
             </div>
         </div>
     );

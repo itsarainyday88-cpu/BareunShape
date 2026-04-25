@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { getSystemInstruction, ACADEMY_BIO } from './agents/prompts';
+import { getSystemInstruction, CLINIC_BIO } from './agents/prompts';
 import { generateAndSaveImage } from './imagen';
 import { thinkingToolDefinitions, searchToolDefinitions } from './tools/definitions';
 import { thinkingTools } from './tools/thinkingHelpers';
@@ -21,26 +21,27 @@ const agentTemperatures: Record<string, number> = {
     Insta: 0.95,
     Blog: 0.9,
     Threads: 0.85,
+    Reputation: 0.8,
     Shortform: 0.7,
     Marketer: 0.7,
 };
 
 /**
- * [BareunShape Edition] 실시간 연기학원 맥락 생성기
+ * [BareunShape Edition] 실시간 의료 맥락 생성기
  */
 function getTodayContext() {
     const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
     const dateStr = now.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
     const month = now.getMonth() + 1;
 
-    let academySeason = "";
-    if (month === 3) academySeason = "입학 시즌 — 신입생 모집 및 기초연기반 개강 시기";
-    else if (month === 7 || month === 8) academySeason = "여름방학 기간 — 연기 집중반 및 방학 특강 골든타임";
-    else if (month === 9 || month === 10) academySeason = "수시/정시 대비 시즌 — 본격적인 예대 입시 및 오디션 준비 기간";
-    else if (month === 12 || month === 1) academySeason = "겨울 집중반 및 연말 정기 공연 준비 시즌";
-    else academySeason = "기초부터 탄탄히 쌓아가는 정규 연기 커리큘럼 운영 시기";
+    let medicalSeason = "";
+    if (month === 3) medicalSeason = "새 학기 시작, 어린이 치과 검진 및 예방 진료 권장기";
+    else if (month === 5) medicalSeason = "가정의 달, 부모님을 위한 고난도 임플란트 및 틀니 상담 집중 기간";
+    else if (month === 7 || month === 8) medicalSeason = "여름방학 기간, 학생 교정 및 집중 치료 골든타임";
+    else if (month === 12 || month === 1) medicalSeason = "연말연시 정기 검진 및 스케일링 권고 시즌";
+    else medicalSeason = "기본에 충실한 정기 검진 및 예방 치료 강조 시기";
 
-    return `- 오늘: ${dateStr}\n- 학원 시즌 맥락: ${academySeason}\n- 분위기: 수강생들의 뜨거운 열정과 배우로서의 성장에 대한 갈망이 높은 시기입니다.`;
+    return `- 오늘: ${dateStr}\n- 의료 시즌 맥락: ${medicalSeason}\n- 분위기: 환자분들의 정직한 진료와 바른 기능 회복에 대한 관심이 높은 시기입니다.`;
 }
 
 // Export as a streaming generator
@@ -90,7 +91,7 @@ export async function* generateAgentResponseStream(agentId: string, message: str
             tools: tools as any,
             generationConfig: {
                 temperature: agentTemperatures[agentId] || 0.7,
-                maxOutputTokens: 65536,
+                maxOutputTokens: 16384,
             },
         });
 
@@ -132,7 +133,7 @@ export async function* generateAgentResponseStream(agentId: string, message: str
         let currentInput: any = await prepareMessageParts(message);
         let functionCallCount = 0;
         const MAX_FUNCTION_CALLS = 10;
-        let verifiedFacts = `${message}\n${ACADEMY_BIO}\n`;
+        let verifiedFacts = `${message}\n${CLINIC_BIO}\n`;
 
         while (true) {
             let attempt = 0;
@@ -196,22 +197,21 @@ export async function* generateAgentResponseStream(agentId: string, message: str
                                     if (imageUrl) {
                                         usedImageUrls.add(imageUrl);
                                         const finalUrl = imageUrl.startsWith('data:') ? imageUrl : encodeURI(imageUrl);
-                                        yield line.replace(fullMatch, `\n\n![원내 자산](${finalUrl})\n\n`) + '\n';
+                                        yield line.replace(fullMatch, `\n\n![AI 생성 이미지](${finalUrl})\n\n`) + '\n';
                                     } else {
                                         const fallback = await getFallbackImageAsync(promptText, Array.from(usedImageUrls), agentId);
                                         usedImageUrls.add(fallback);
-                                        yield line.replace(fullMatch, `\n\n![학원 이미지](${encodeURI(fallback)})\n\n`) + '\n';
+                                        yield line.replace(fullMatch, `\n\n![병원 이미지](${encodeURI(fallback)})\n\n`) + '\n';
                                     }
                                     continue;
                                 } catch (err) {
                                     const fallback = await getFallbackImageAsync(promptText, Array.from(usedImageUrls), agentId);
                                     usedImageUrls.add(fallback);
-                                    yield line.replace(fullMatch, `\n\n![학원 이미지](${encodeURI(fallback)})\n\n`) + '\n';
+                                    yield line.replace(fullMatch, `\n\n![병원 이미지](${encodeURI(fallback)})\n\n`) + '\n';
                                 }
                             } else yield line + '\n';
                         } else {
-                            let processedLine = line.replace(/\[?(AI\s*생성\s*이미지|사진\s*삽입|해당\s*이미지)\]?/gi, '');
-                            processedLine = processedLine + '\n';
+                            let processedLine = line + '\n';
                             if (agentId === 'Shortform') {
                                 processedLine = processedLine.replace(/!\[.*?\]\(.*?\)/g, '');
                                 if (!processedLine.trim()) continue;
@@ -232,7 +232,7 @@ export async function* generateAgentResponseStream(agentId: string, message: str
                                 } else if (inThreadsCompliance) {
                                     yield processedLine;
                                 } else if (!skipThreadsPost && processedLine.trim().length > 0) {
-                                    threadsLineCount++; yield processedLine;
+                                    threadsLineCount++; if (threadsLineCount <= 2) yield processedLine;
                                 } else if (!skipThreadsPost) yield processedLine;
                             } else if (agentId === 'Insta') {
                                 if (!isFirstTextPassed && processedLine.trim().length > 0) {
@@ -312,7 +312,7 @@ function enforceInstaHook(text: string): string {
     if (hook.length > 28) hook = hook.substring(0, 25) + '...';
     
     const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/;
-    if (!emojiRegex.test(hook)) hook = `✨ ${hook} 🎭`;
+    if (!emojiRegex.test(hook)) hook = `✨ ${hook} 🦷`;
     
     lines[firstIdx] = hook;
     return lines.join('\n');
@@ -336,7 +336,11 @@ function isSimilarToHook(hook: string, line: string): boolean {
     return (matches / lw.length) > 0.6;
 }
 
-/** Truth-Guard Engine (비활성화) */
+/** Truth-Guard Engine */
 function verifyFactIntegrity(text: string, knownFacts: string): string {
-    return text;
+    const factPattern = /([1-9]\d*)\s*(명|%|점|학년도|등급|위|%p|원|건|개|배|학기|대|곳|가지)/g;
+    return text.replace(factPattern, (match, value) => {
+        if (parseInt(value) <= 10 || knownFacts.includes(value)) return match;
+        return `[🚨 확인 필요: ${match}]`;
+    });
 }

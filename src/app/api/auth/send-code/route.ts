@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     try {
         const { email } = await request.json();
 
-        const allowedEmails = [process.env.GMAIL_USER, 'itsarainyday88@gmail.com'].filter(Boolean);
+        const allowedEmails = [process.env.GMAIL_USER, '[REDACTED_EMAIL]'].filter(Boolean);
         if (!allowedEmails.includes(email)) {
             return NextResponse.json({ error: 'Unauthorized email address' }, { status: 401 });
         }
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
         codeStore.set(email, { code, expires });
 
         // Send email
-        const subject = 'Your BareunShape Admin Verification Code';
+        const subject = 'Your Seoul Yonsei Admin Verification Code';
         const text = `Your verification code is: ${code}. It expires in 5 minutes.`;
 
         // Attempt to send email

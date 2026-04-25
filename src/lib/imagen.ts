@@ -25,8 +25,8 @@ export async function generateAndSaveImage(prompt: string, excludedPaths: string
     }
 
     // 2. Negative Prompt Injection
-    const visuals = "Photographic style. High quality. NO TEXT. Korean ethnicity people only. Modern acting academy, rehearsal studio, stage environment. Asian performers with black hair. High-end Korean performing arts training environment. ";
-    const finalPrompt = visuals + cleanPrompt + " :: Do not include any text, signs, or watermarks. NO Western features, NO Caucasian, NO non-Asian, NO European style.";
+    const visuals = "Photographic style. High quality. NO TEXT. Subject: Korean, Asian featured people and dental clinic environment. ";
+    const finalPrompt = visuals + cleanPrompt + " :: Do not include any text, signs, or watermarks.";
 
     console.log(`[Imagen] Generating image for: "${finalPrompt.substring(0, 50)}..."`);
 
@@ -34,11 +34,10 @@ export async function generateAndSaveImage(prompt: string, excludedPaths: string
         let url = '';
         let requestBody: any = {};
 
-        // Use predict for newly updated imagen-4.0 models
-        url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:predict?key=${apiKey}`;
+        // Use generateContent for gemini/imagen models in v1beta
+        url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
         requestBody = {
-            instances: [{ prompt: promptToUse }],
-            parameters: { sampleCount: 1 }
+            contents: [{ parts: [{ text: promptToUse }] }],
         };
 
         try {
@@ -55,9 +54,9 @@ export async function generateAndSaveImage(prompt: string, excludedPaths: string
             }
 
             const data = await response.json();
-            // predict returns base64 inside predictions array
-            if (data.predictions?.[0]?.bytesBase64Encoded) {
-                return data.predictions[0].bytesBase64Encoded;
+            const part = data.candidates?.[0]?.content?.parts?.find((p: any) => p.inlineData);
+            if (part && part.inlineData && part.inlineData.data) {
+                return part.inlineData.data;
             }
             return null;
 
@@ -69,8 +68,10 @@ export async function generateAndSaveImage(prompt: string, excludedPaths: string
 
     try {
         const modelOrder = [
-            'imagen-4.0-generate-001',
-            'imagen-4.0-fast-generate-001'
+            'imagen-3.0-generate-001',
+            'imagen-3.0-fast-generate-001',
+            'gemini-3-pro-image-preview',
+            'gemini-3.1-flash-image-preview'
         ];
 
         let base64Data = null;

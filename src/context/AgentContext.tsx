@@ -1,9 +1,8 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode, useRef } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
-// [🚨 UI Diet] Exactly 5 agents as per Reference Frame
-export type AgentId = 'Marketer' | 'Blog' | 'Insta' | 'Shortform' | 'Threads';
+type AgentId = 'Marketer' | 'Blog' | 'Insta' | 'Dang' | 'Supporter' | 'Reputation' | 'Shortform' | 'Threads' | 'Analyst' | 'Web_D';
 type ViewMode = 'chat' | 'calendar' | 'archive';
 
 interface AgentContextType {
@@ -17,6 +16,8 @@ interface AgentContextType {
 }
 
 const AgentContext = createContext<AgentContextType | undefined>(undefined);
+
+import { useRef } from 'react';
 
 export function AgentProvider({ children }: { children: ReactNode }) {
     const [activeAgent, setActiveAgent] = useState<AgentId>('Blog');

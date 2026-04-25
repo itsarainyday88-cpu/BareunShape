@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Loader2 } from 'lucide-react';
+import { User, Lock, ArrowRight, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+
+import { BRAND } from '@/lib/brand';
 
 export default function LoginPage() {
     const [username, setUsername] = useState('');
@@ -17,14 +19,17 @@ export default function LoginPage() {
         e.preventDefault();
         setLoading(true);
         setError('');
+
         try {
             const res = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password, remember }),
             });
+
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || 'Login failed');
+
             router.push('/');
         } catch (err: any) {
             setError(err.message);
@@ -32,56 +37,56 @@ export default function LoginPage() {
             setLoading(false);
         }
     };
-
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#f0ede8] relative overflow-hidden">
-            {/* Watermark */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-['Playfair_Display'] italic text-[22vw] text-[#1c1c19] opacity-[0.04] pointer-events-none select-none whitespace-nowrap z-0">
-                Excellence
-            </div>
+        <div className="min-h-screen flex items-center justify-center bg-primary text-secondary relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-accent/20 via-transparent to-transparent" />
 
-            {/* Card */}
-            <div className="relative z-10 w-full max-w-[420px] bg-white shadow-sm px-12 py-14">
-                {/* Brand */}
-                <div className="mb-10">
-                    <h1 className="font-['Playfair_Display'] text-[28px] font-bold text-[#1c1c19] leading-tight">
-                        파인액터스 <span className="text-[#725b37]">연기학원</span>
-                    </h1>
-                    <p className="font-['Playfair_Display'] italic text-xl text-[#4d463c] mt-1">Faire Click</p>
-                    <p className="font-['Space_Grotesk'] tracking-[0.2em] uppercase text-[10px] text-[#4d463c]/60 mt-2">Acting Academy Solution</p>
+            <div className="w-full max-w-md p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-sand/30 relative z-10">
+                <div className="text-center mb-10">
+                    <h1 className="text-3xl font-serif font-bold text-secondary mb-2">바른모양치과 마케팅 OS</h1>
+                    <p className="text-sm text-secondary/70 tracking-wide uppercase">Dental Clinic Solution</p>
                 </div>
 
                 {error && (
-                    <div className="mb-6 p-3 border-l-2 border-red-600 bg-red-50 text-red-700 text-xs font-['Space_Grotesk'] tracking-wide">
+                    <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm rounded animate-pulse">
                         {error}
                     </div>
                 )}
 
-                <form onSubmit={handleLogin} className="space-y-5">
+                <form onSubmit={handleLogin} className="space-y-6">
                     <div>
-                        <label className="block font-['Space_Grotesk'] text-xs text-[#4d463c] tracking-[0.05em] mb-2">아이디</label>
-                        <input
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            placeholder="fineactors"
-                            className="w-full px-4 py-3 bg-[#f6f3ee] border border-[#d0c5b7]/40 text-[#1c1c19] text-sm font-['Space_Grotesk'] outline-none focus:border-[#725b37]/50 focus:bg-white transition-all placeholder:text-[#4d463c]/30"
-                            required
-                        />
+                        <label htmlFor="username" className="block text-sm font-medium text-secondary mb-2">아이디</label>
+                        <div className="relative">
+                            <User className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
+                            <input
+                                type="text"
+                                id="username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all outline-none text-secondary"
+                                placeholder="아이디를 입력하세요"
+                                required
+                            />
+                        </div>
                     </div>
 
                     <div>
-                        <label className="block font-['Space_Grotesk'] text-xs text-[#4d463c] tracking-[0.05em] mb-2">비밀번호</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="••••"
-                            className="w-full px-4 py-3 bg-[#f6f3ee] border border-[#d0c5b7]/40 text-[#1c1c19] text-sm font-['Space_Grotesk'] outline-none focus:border-[#725b37]/50 focus:bg-white transition-all placeholder:text-[#4d463c]/30"
-                            required
-                        />
-                        <div className="flex items-center justify-between mt-3">
-                            <label className="flex items-center gap-2 cursor-pointer">
+                        <label htmlFor="password" className="block text-sm font-medium text-secondary mb-2">비밀번호</label>
+                        <div className="relative">
+                            <Lock className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
+                            <input
+                                type="password"
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all outline-none text-secondary"
+                                placeholder="••••••••"
+                                required
+                            />
+                        </div>
+
+                        <div className="flex items-center justify-between mt-3 text-sm">
+                            <label className="flex items-center gap-2 cursor-pointer text-secondary/80 hover:text-secondary group">
                                 <div className="relative">
                                     <input
                                         type="checkbox"
@@ -89,40 +94,42 @@ export default function LoginPage() {
                                         checked={remember}
                                         onChange={(e) => setRemember(e.target.checked)}
                                     />
-                                    <div className="w-4 h-4 border border-[#d0c5b7] bg-white peer-checked:bg-[#725b37] peer-checked:border-[#725b37] transition-all" />
+                                    <div className="w-4 h-4 border border-sand rounded bg-white peer-checked:bg-secondary peer-checked:border-secondary transition-all"></div>
                                     <svg className="w-3 h-3 text-white absolute top-0.5 left-0.5 opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                                        <polyline points="20 6 9 17 4 12" />
+                                        <polyline points="20 6 9 17 4 12"></polyline>
                                     </svg>
                                 </div>
-                                <span className="font-['Space_Grotesk'] text-xs text-[#4d463c]">자동 로그인</span>
+                                자동 로그인
                             </label>
-                            <Link href="/forgot-password" className="font-['Space_Grotesk'] text-xs text-[#4d463c]/60 hover:text-[#725b37] transition-colors">
+                            <Link href="/forgot-password" className="text-secondary/60 hover:text-secondary hover:underline">
                                 비밀번호 찾기
                             </Link>
                         </div>
                     </div>
 
-                    <div className="pt-2">
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full py-3.5 bg-[#1c1c19] text-white font-['Space_Grotesk'] text-sm tracking-[0.1em] uppercase flex items-center justify-center gap-2 hover:bg-[#2d2d2a] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-                        >
-                            {loading ? <Loader2 className="animate-spin h-4 w-4" /> : <>로그인 →</>}
-                        </button>
-                    </div>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full flex items-center justify-center py-3.5 px-6 border border-transparent rounded-xl text-base font-semibold text-white bg-secondary hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary transition-all shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed"
+                    >
+                        {loading ? <Loader2 className="animate-spin h-5 w-5" /> : (
+                            <>
+                                로그인 <ArrowRight className="ml-2 h-5 w-5" />
+                            </>
+                        )}
+                    </button>
                 </form>
 
-                <div className="mt-8 text-center">
-                    <span className="font-['Space_Grotesk'] text-xs text-[#4d463c]/50">계정이 없으신가요?&nbsp;</span>
-                    <Link href="/register" className="font-['Space_Grotesk'] text-xs font-semibold text-[#1c1c19] hover:text-[#725b37] transition-colors">
+                <div className="mt-8 pt-6 border-t border-sand/30 flex justify-center text-sm">
+                    <span className="text-gray-400 mr-2">계정이 없으신가요?</span>
+                    <Link href="/register" className="font-semibold text-secondary hover:underline">
                         회원가입
                     </Link>
                 </div>
+            </div>
 
-                <div className="mt-10 pt-6 border-t border-[#d0c5b7]/20 text-center">
-                    <p className="font-['Space_Grotesk'] text-[10px] text-[#4d463c]/40 tracking-[0.05em]">파인액터스연기학원 관계자 전용</p>
-                </div>
+            <div className="absolute bottom-6 text-center w-full text-xs text-secondary/40">
+                관계자 외 출입 금지
             </div>
         </div>
     );
